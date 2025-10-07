@@ -1,4 +1,4 @@
-**This repository provides a reusable Google Maps module designed for integration across multiple StayOn applications (such as stayon, and other Repos).
+**This repository provides a reusable Google Maps module designed for integration across multiple applications (such as stayon, and other Repos).
 It encapsulates all Google Maps–related logic, including:**
 
 - Interactive map rendering with Flutter google_maps_flutter
