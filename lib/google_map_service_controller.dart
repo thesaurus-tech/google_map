@@ -9,7 +9,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:stay_on/const.dart';
-import 'package:stay_on/models/google_map/google_map_model.dart';
+import 'package:google_map_submodule/google_map_model.dart';
 import 'package:stay_on/ui_components/base_class_impl_componets/app_theme_colors.dart';
 import 'package:stay_on/ui_components/base_class_impl_componets/svg_icons.dart';
 import 'package:stay_on/widgets/open_street_map.dart';
