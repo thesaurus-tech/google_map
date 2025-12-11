@@ -1,0 +1,38 @@
+syntax = "proto3";
+package address;
+
+message Coordinates{
+    double latitude=1;
+    double longitude=2;
+}
+
+message Address{
+  Coordinates coordinates=1;
+  string country=2;
+  string state=3;
+  string city=4;
+  string suburb=5;
+  string streetAddress=6;
+  string postCode=7;
+  string completeAddress=8;
+}
+message DetailedAddress{
+  string country=1;
+  string state=2;
+  string city=3;
+  string suburb=4;
+  string streetAddress=5;
+  string postCode=6;
+}
+
+message CondensedAddress{
+  string details=1;
+
+}
+message AddressWIP{
+  Coordinates coordinates =1;
+  oneof payload{
+    DetailedAddress detailedAddress=2;
+    CondensedAddress condensedAddress=3;
+  }
+}

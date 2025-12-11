@@ -10,7 +10,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
-import 'package:stay_on/const.dart';
+import 'package:stay_on/submodules/google_map_submodule/lib/const.dart';
+// import 'package:stay_on/const.dart';
 // import 'package:stay_on/ui_components/global_components/custom_widgets/searchble_drop_down.dart';
 import 'package:stay_on/widgets/open_street_map.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -264,7 +265,7 @@ Future<Map<String, String>> getDistance({
     throw ArgumentError('Both origin and destination must be provided.');
   }
 
-  final uri = Uri.parse('${dockerPath}getDistance'); // 
+  final uri = Uri.parse('${dockerPath}getDistance'); 
 
   final body = jsonEncode({
     'origin': origin,
