@@ -5,19 +5,21 @@ import 'dart:collection';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_map_submodule/const.dart';
+import 'package:google_map_submodule/firebase/address_collection.dart' as firebase;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
-import 'package:stay_on/submodules/google_map_submodule/lib/const.dart';
+// import 'package:stay_on/submodules/google_map_submodule/lib/const.dart';
 // import 'package:stay_on/const.dart';
 // import 'package:stay_on/ui_components/global_components/custom_widgets/searchble_drop_down.dart';
-import 'package:stay_on/widgets/open_street_map.dart';
+// import 'package:stay_on/widgets/open_street_map.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:stay_on/models/firebase/address_collection.dart' as firebase;
-import 'package:stay_on/models/protobuf/generated/address.pb.dart' as protobuf;
-import 'package:stay_on/widgets/theme_data.dart' as theme;
+// import 'package:stay_on/models/firebase/address_collection.dart' as firebase;
+// import 'package:stay_on/models/protobuf/generated/address.pb.dart' as protobuf;
+// import 'package:stay_on/widgets/theme_data.dart' as theme;
 
 enum ValidationState { valid, invalid, empty }
 

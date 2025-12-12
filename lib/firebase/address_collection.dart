@@ -1,6 +1,8 @@
+import 'package:google_map_submodule/protobuf/generated/address.pb.dart' as protobuf;
+
 import 'dbcollection.dart';
 import 'dart:convert';
-import 'package:stay_on/models/protobuf/generated/address.pb.dart' as protobuf;
+// import 'package:stay_on/models/protobuf/generated/address.pb.dart' as protobuf;
 
 
 typedef Address = DbObject<protobuf.Address>;

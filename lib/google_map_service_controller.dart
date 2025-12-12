@@ -3,20 +3,19 @@ import 'dart:collection';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_map_submodule/components/svg_icon.dart';
+import 'package:google_map_submodule/firebase/address_collection.dart' as firebase;
+import 'package:google_map_submodule/protobuf/generated/address.pb.dart' as protobuf;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
-import 'package:stay_on/const.dart';
 import 'package:google_map_submodule/google_map_model.dart';
-import 'package:stay_on/ui_components/base_class_impl_componets/app_theme_colors.dart';
-import 'package:stay_on/ui_components/base_class_impl_componets/svg_icons.dart';
-import 'package:stay_on/widgets/open_street_map.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:stay_on/models/firebase/address_collection.dart' as firebase;
-import 'package:stay_on/models/protobuf/generated/address.pb.dart' as protobuf;
-import 'package:stay_on/widgets/theme_data.dart' as theme;
+// import 'package:stay_on/models/firebase/address_collection.dart' as firebase;
+// import 'package:stay_on/models/protobuf/generated/address.pb.dart' as protobuf;
+
 
 
 enum AddressFieldType { country, state, city,suburb, pincode }
@@ -283,8 +282,7 @@ class _GoogleMapServiceControllerState
                                                           child: Text(
                                                             '*${widget.lookUpLabel}',
                                                             style: TextStyle(
-                                                              color: AppColors
-                                                                  .primary200,
+                                                              color:Color(0xFF0972FD),
                                                               fontSize: 10,
                                                               fontFamily:
                                                                   'Inter',
@@ -495,7 +493,7 @@ class _GoogleMapServiceControllerState
                                                                               Text(
                                                                             option,
                                                                             style:
-                                                                                theme.kAddressTextStyle,
+                                                                                 TextStyle(fontSize: 12),
                                                                           ), // Display the option text
                                                                         ),
                                                                       );
@@ -532,8 +530,7 @@ class _GoogleMapServiceControllerState
 
                                                             // Builds the text field for address input
                                                             return TextFormField(
-                                                              style: theme
-                                                                  .kAddressTextStyle,
+                                                              style: TextStyle(fontSize: 12),
                                                               controller: googleMapModel
                                                                       .addressController =
                                                                   fieldTextEditingController,
@@ -555,9 +552,7 @@ class _GoogleMapServiceControllerState
                                                                 border:
                                                                     InputBorder
                                                                         .none,
-                                                                prefixIcon: AppIcons
-                                                                    .search
-                                                                    .extraSmall,
+                                                                prefixIcon: AppIcons.search.extraSmall,
 
                                                                 prefixIconConstraints:
                                                                     BoxConstraints(
@@ -703,7 +698,7 @@ class _GoogleMapServiceControllerState
                                                             onTap: () => onSelected(option),
                                                             child: ListTile(
                                                               tileColor: highlight ? Colors.black12 : null,
-                                                              title: Text(option, style: theme.kAddressTextStyle),
+                                                              title: Text(option, style:  TextStyle(fontSize: 12)),
                                                             ),
                                                           );
                                                         },
@@ -734,14 +729,14 @@ class _GoogleMapServiceControllerState
                                                 });
 
                                                 return TextFormField(
-                                                  style: theme.kAddressTextStyle,
+                                                  style:  TextStyle(fontSize: 12),
                                                   controller: googleMapModel.countryController = fieldTextEditingController,
                                                   readOnly: widget.readOnly,
                                                   focusNode: fieldFocusNode,
                                                   decoration: InputDecoration(
                                                             isDense: true,
                                                             enabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: AppColors.primary200, width: 1),
+                                                              borderSide: BorderSide(color:Color(0xFF0972FD), width: 1),
                                                             ),
                                                             focusedBorder: UnderlineInputBorder(
                                                               borderSide: BorderSide(color: Color(0xFF0972FD), width: 1),
@@ -877,7 +872,7 @@ class _GoogleMapServiceControllerState
                                                                         onTap: () => onSelected(option),
                                                                         child: ListTile(
                                                                           tileColor: highlight ? Colors.black12 : null,
-                                                                          title: Text(option, style: theme.kAddressTextStyle),
+                                                                          title: Text(option, style:  TextStyle(fontSize: 12)),
                                                                         ),
                                                                       );
                                                                     },
@@ -910,14 +905,14 @@ class _GoogleMapServiceControllerState
                                                             });
 
                                                             return TextFormField(
-                                                              style: theme.kAddressTextStyle,
+                                                              style:  TextStyle(fontSize: 12),
                                                               controller: googleMapModel.stateController = fieldTextEditingController,
                                                               readOnly: widget.readOnly,
                                                               focusNode: fieldFocusNode,
                                                              decoration: InputDecoration(
                                                             isDense: true,
                                                             enabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: AppColors.primary200, width: 1),
+                                                              borderSide: BorderSide(color:Color(0xFF0972FD), width: 1),
                                                             ),
                                                             focusedBorder: UnderlineInputBorder(
                                                               borderSide: BorderSide(color: Color(0xFF0972FD), width: 1),
@@ -1044,7 +1039,7 @@ class _GoogleMapServiceControllerState
                                                                     onTap: () => onSelected(option),
                                                                     child: ListTile(
                                                                       tileColor: highlight ? Colors.black12 : null,
-                                                                      title: Text(option, style: theme.kAddressTextStyle),
+                                                                      title: Text(option, style:  TextStyle(fontSize: 12)),
                                                                     ),
                                                                   );
                                                                 },
@@ -1058,14 +1053,14 @@ class _GoogleMapServiceControllerState
                                                         googleMapModel.cityController = fieldTextEditingController;
 
                                                         return TextFormField(
-                                                          style: theme.kAddressTextStyle,
+                                                          style:  TextStyle(fontSize: 12),
                                                           controller: fieldTextEditingController,
                                                           readOnly: widget.readOnly,
                                                           focusNode: fieldFocusNode,
                                                           decoration: InputDecoration(
                                                             isDense: true,
                                                             enabledBorder: UnderlineInputBorder(
-                                                              borderSide: BorderSide(color: AppColors.primary200, width: 1),
+                                                              borderSide: BorderSide(color:Color(0xFF0972FD), width: 1),
                                                             ),
                                                             focusedBorder: UnderlineInputBorder(
                                                               borderSide: BorderSide(color: Color(0xFF0972FD), width: 1),
@@ -1190,7 +1185,7 @@ class _GoogleMapServiceControllerState
                                                                   onTap: () => onSelected(option),
                                                                   child: ListTile(
                                                                     tileColor: highlight ? Colors.black12 : null,
-                                                                    title: Text(option, style: theme.kAddressTextStyle),
+                                                                    title: Text(option, style:  TextStyle(fontSize: 12)),
                                                                   ),
                                                                 );
                                                               },
@@ -1223,7 +1218,7 @@ class _GoogleMapServiceControllerState
                                                       googleMapModel.suburbController = fieldTextEditingController;
 
                                                       return TextFormField(
-                                                        style: theme.kAddressTextStyle,
+                                                        style:  TextStyle(fontSize: 12),
                                                         controller: fieldTextEditingController,
                                                         readOnly: widget.readOnly ||
                                                                   widget.addressDb.data.country.isEmpty ||
@@ -1355,7 +1350,7 @@ class _GoogleMapServiceControllerState
                                                                       onTap: () => onSelected(option),
                                                                       child: ListTile(
                                                                         tileColor: highlight ? Colors.black12 : null,
-                                                                        title: Text(option, style: theme.kAddressTextStyle),
+                                                                        title: Text(option, style:  TextStyle(fontSize: 12)),
                                                                       ),
                                                                     );
                                                                   },
@@ -1385,7 +1380,7 @@ class _GoogleMapServiceControllerState
                                                           googleMapModel.pincodeController = fieldTextEditingController;
 
                                                           return TextFormField(
-                                                            style: theme.kAddressTextStyle,
+                                                            style:  TextStyle(fontSize: 12),
                                                             controller: fieldTextEditingController,
                                                             readOnly: widget.readOnly ||
                                                                       widget.addressDb.data.country.isEmpty ||
@@ -1458,8 +1453,7 @@ class _GoogleMapServiceControllerState
                                                             addressFieldLabelTextStyle()),
                                                     SizedBox(height: 5),
                                                     TextFormField(
-                                                      style: theme
-                                                          .kAddressTextStyle,
+                                                      style:TextStyle(fontSize: 12),
                                                       controller: googleMapModel
                                                           .streetController,
                                                       readOnly: widget.readOnly,
@@ -1503,7 +1497,7 @@ class _GoogleMapServiceControllerState
     return InputDecoration(
       isDense: true,
       enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: AppColors.primary200, width: 1),
+        borderSide: BorderSide(color:Color(0xFF0972FD), width: 1),
       ),
       focusedBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Color(0xFF0972FD), width: 1),
