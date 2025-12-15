@@ -36,6 +36,11 @@ class GoogleMapServiceController extends StatefulWidget {
   final bool? isAddressLookupRequired;
   final protobuf.Address? filterAddress;
   final Color? backgroundColor;
+  final bool mapOnly;
+  final double? mapHeight;
+  final double? mapWidth;
+
+
 
   const GoogleMapServiceController({
     super.key,
@@ -54,6 +59,9 @@ class GoogleMapServiceController extends StatefulWidget {
     this.filterAddress,
     this.backgroundColor,
     this.lookUpLabel,
+    this.mapOnly = false,
+      this.mapHeight,
+  this.mapWidth,
   });
 
   @override
@@ -123,6 +131,37 @@ class _GoogleMapServiceControllerState
       body: LayoutBuilder(
         builder: (context, constraints) {
           final maxWidth = constraints.maxWidth;
+
+            if (widget.mapOnly) {
+    return Container(
+  height: widget.mapHeight ?? 210,
+  width: widget.mapWidth ?? maxWidth,
+  color: widget.backgroundColor ?? Colors.transparent,
+  child: GoogleMap(
+    initialCameraPosition: GoogleMapModel.initialPosition,
+    onMapCreated: (GoogleMapController controller) {
+      googleMapModel.mapController.complete(controller);
+    },
+    onTap: widget.readOnly
+        ? null
+        : (LatLng tappedLocation) {
+            googleMapModel.reverseGeocode(
+              tappedLocation,
+              widget.addressDb,
+              widget.onLookUpDataChange,
+            );
+            googleMapModel.addMarker(tappedLocation);
+            googleMapModel.moveCamera(tappedLocation);
+          },
+    onCameraMove: googleMapModel.onCameraMove,
+    markers: googleMapModel.marker != null
+        ? {googleMapModel.marker!}
+        : {},
+  ),
+);
+
+  }
+
           // You can use constraints.maxWidth and constraints.maxHeight here
           return Container(
             height: 210,
