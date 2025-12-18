@@ -119,53 +119,7 @@ class _GoogleMapServiceControllerState
   //   googleMapModel.addressDb = widget.addressDb;
   // }
 
-// @override
-// void initState() {
-//   super.initState();
-//   googleMapModel = GoogleMapModel();
 
-//   googleMapModel.fCountryName = widget.filterAddress?.country ?? '';
-//   googleMapModel.fStateName = widget.filterAddress?.state ?? '';
-//   googleMapModel.fCityName = widget.filterAddress?.city ?? '';
-
-//   ///
-//   if (widget.initialAddress != null &&
-//       widget.initialAddress!.trim().isNotEmpty) {
-
-//     debugPrint('Geocoding initial address: ${widget.initialAddress}');
-
-//     googleMapModel.addressGeocode(
-//       widget.initialAddress!,
-//       widget.addressDb,
-//       widget.onLookUpDataChange,
-//     );
-
-//   } else if (widget.initialLocation != GoogleMapModel.initialPosition.target) {
-
-//     /// fallback to lat/lng
-//     googleMapModel.initializeMap(widget.initialLocation);
-
-//   } else {
-//     googleMapModel.getCurrentLocation();
-//   }
-
-//   if (widget.lookUpData != '') {
-//     googleMapModel.addressController.text = widget.lookUpData!;
-//   }
-
-//   googleMapModel.isMapVisible = widget.showMap;
-//   googleMapModel.isAddressFieldShow =
-//       widget.showMap || widget.isShowAddressFields == true;
-
-//   googleMapModel.countryController.text = widget.addressDb.data.country;
-//   googleMapModel.stateController.text = widget.addressDb.data.state;
-//   googleMapModel.cityController.text = widget.addressDb.data.city;
-//   googleMapModel.suburbController.text = widget.addressDb.data.suburb;
-//   googleMapModel.streetController.text = widget.addressDb.data.streetAddress;
-//   googleMapModel.pincodeController.text = widget.addressDb.data.postCode;
-
-//   googleMapModel.addressDb = widget.addressDb;
-// }
 @override
 void initState() {
   super.initState();
@@ -261,19 +215,6 @@ void initState() {
   //       ? {googleMapModel.marker!}
   //       : {},
   // ),
-// GoogleMap(
-//   initialCameraPosition: CameraPosition(
-//     target: widget.initialLocation ?? GoogleMapModel.initialPosition.target,
-//     zoom: 14,
-//   ),
-//   onMapCreated: (GoogleMapController controller) {
-//     googleMapModel.mapController.complete(controller);
-//     //  DO NOT force camera or marker here
-//   },
-//   markers: googleMapModel.marker != null
-//       ? {googleMapModel.marker!}
-//       : {},
-// )
 
 GoogleMap(
   initialCameraPosition: GoogleMapModel.initialPosition,
