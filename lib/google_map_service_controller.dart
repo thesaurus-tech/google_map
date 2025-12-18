@@ -29,7 +29,6 @@ class GoogleMapServiceController extends StatefulWidget {
   final firebase.Address addressDb;
   final Function(firebase.Address) onAddressChanged;
   final Function(String)? onLookUpDataChange;
-  final LatLng initialLocation;
   final String? lookUpData;
   final String? lookUpLabel;
   final bool isShowOnlyLookUp;
@@ -39,18 +38,23 @@ class GoogleMapServiceController extends StatefulWidget {
   final bool mapOnly;
   final double? mapHeight;
   final double? mapWidth;
+  final LatLng? initialLocation;
+final String? initialAddress;
+
+
 
 
 
   const GoogleMapServiceController({
     super.key,
+     this.initialAddress,
+  this.initialLocation,
     this.showMap = false,
     required this.isShowOnlyLookUp,
     this.showAutocomplete = true,
     this.isLookUpShowOnMap = false,
     required this.addressDb,
     required this.onAddressChanged,
-    required this.initialLocation,
     this.isShowAddressFields = false,
     this.lookUpData = '',
     required this.readOnly,
@@ -83,37 +87,134 @@ class _GoogleMapServiceControllerState
   };
 
 
-  @override
-  void initState() {
-    super.initState();
-    googleMapModel = GoogleMapModel();
-    // Safely assign fCountryName, fStateName, and fCityName
-    googleMapModel.fCountryName = widget.filterAddress?.country ?? '';
-    googleMapModel.fStateName = widget.filterAddress?.state ?? '';
-    googleMapModel.fCityName = widget.filterAddress?.city ?? '';
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   googleMapModel = GoogleMapModel();
+  //   // Safely assign fCountryName, fStateName, and fCityName
+  //   googleMapModel.fCountryName = widget.filterAddress?.country ?? '';
+  //   googleMapModel.fStateName = widget.filterAddress?.state ?? '';
+  //   googleMapModel.fCityName = widget.filterAddress?.city ?? '';
 
-    if (widget.initialLocation == GoogleMapModel.initialPosition.target) {
-      googleMapModel.getCurrentLocation();
-    } else {
-      googleMapModel.initializeMap(widget.initialLocation);
-    }
+  //   if (widget.initialLocation == GoogleMapModel.initialPosition.target) {
+  //     googleMapModel.getCurrentLocation();
+  //   } else {
+  //     googleMapModel.initializeMap(widget.initialLocation);
+  //   }
 
-    if (widget.lookUpData != '') {
-      googleMapModel.addressController.text = widget.lookUpData!;
-    }
+  //   if (widget.lookUpData != '') {
+  //     googleMapModel.addressController.text = widget.lookUpData!;
+  //   }
 
-    googleMapModel.isMapVisible = widget.showMap;
-    googleMapModel.isAddressFieldShow =
-        widget.showMap || widget.isShowAddressFields! == true ? true : false;
+  //   googleMapModel.isMapVisible = widget.showMap;
+  //   googleMapModel.isAddressFieldShow =
+  //       widget.showMap || widget.isShowAddressFields! == true ? true : false;
 
-    googleMapModel.countryController.text = widget.addressDb.data.country;
-    googleMapModel.stateController.text = widget.addressDb.data.state;
-    googleMapModel.cityController.text = widget.addressDb.data.city;
-    googleMapModel.suburbController.text = widget.addressDb.data.suburb;
-    googleMapModel.streetController.text = widget.addressDb.data.streetAddress;
-    googleMapModel.pincodeController.text = widget.addressDb.data.postCode;
-    googleMapModel.addressDb = widget.addressDb;
+  //   googleMapModel.countryController.text = widget.addressDb.data.country;
+  //   googleMapModel.stateController.text = widget.addressDb.data.state;
+  //   googleMapModel.cityController.text = widget.addressDb.data.city;
+  //   googleMapModel.suburbController.text = widget.addressDb.data.suburb;
+  //   googleMapModel.streetController.text = widget.addressDb.data.streetAddress;
+  //   googleMapModel.pincodeController.text = widget.addressDb.data.postCode;
+  //   googleMapModel.addressDb = widget.addressDb;
+  // }
+
+// @override
+// void initState() {
+//   super.initState();
+//   googleMapModel = GoogleMapModel();
+
+//   googleMapModel.fCountryName = widget.filterAddress?.country ?? '';
+//   googleMapModel.fStateName = widget.filterAddress?.state ?? '';
+//   googleMapModel.fCityName = widget.filterAddress?.city ?? '';
+
+//   ///
+//   if (widget.initialAddress != null &&
+//       widget.initialAddress!.trim().isNotEmpty) {
+
+//     debugPrint('Geocoding initial address: ${widget.initialAddress}');
+
+//     googleMapModel.addressGeocode(
+//       widget.initialAddress!,
+//       widget.addressDb,
+//       widget.onLookUpDataChange,
+//     );
+
+//   } else if (widget.initialLocation != GoogleMapModel.initialPosition.target) {
+
+//     /// fallback to lat/lng
+//     googleMapModel.initializeMap(widget.initialLocation);
+
+//   } else {
+//     googleMapModel.getCurrentLocation();
+//   }
+
+//   if (widget.lookUpData != '') {
+//     googleMapModel.addressController.text = widget.lookUpData!;
+//   }
+
+//   googleMapModel.isMapVisible = widget.showMap;
+//   googleMapModel.isAddressFieldShow =
+//       widget.showMap || widget.isShowAddressFields == true;
+
+//   googleMapModel.countryController.text = widget.addressDb.data.country;
+//   googleMapModel.stateController.text = widget.addressDb.data.state;
+//   googleMapModel.cityController.text = widget.addressDb.data.city;
+//   googleMapModel.suburbController.text = widget.addressDb.data.suburb;
+//   googleMapModel.streetController.text = widget.addressDb.data.streetAddress;
+//   googleMapModel.pincodeController.text = widget.addressDb.data.postCode;
+
+//   googleMapModel.addressDb = widget.addressDb;
+// }
+@override
+void initState() {
+  super.initState();
+  googleMapModel = GoogleMapModel();
+
+  googleMapModel.fCountryName = widget.filterAddress?.country ?? '';
+  googleMapModel.fStateName = widget.filterAddress?.state ?? '';
+  googleMapModel.fCityName = widget.filterAddress?.city ?? '';
+  if (widget.initialAddress != null &&
+      widget.initialAddress!.trim().isNotEmpty) {
+
+    debugPrint(' Init via ADDRESS');
+
+    googleMapModel.addressGeocode(
+      widget.initialAddress!,
+      widget.addressDb,
+      widget.onLookUpDataChange,
+    ).then((_) {
+      // marker & camera will be handled inside model
+      setState(() {});
+    });
+
+  } else if (widget.initialLocation != null) {
+
+    debugPrint(' Init via LAT/LNG');
+
+    googleMapModel.initializeMap(widget.initialLocation!);
+
+  } else {
+
+    debugPrint(' Init via CURRENT LOCATION');
+
+    googleMapModel.getCurrentLocation();
   }
+
+  googleMapModel.isMapVisible = widget.showMap;
+  googleMapModel.isAddressFieldShow =
+      widget.showMap || widget.isShowAddressFields == true;
+  
+    googleMapModel.countryController.text = widget.addressDb.data.country;
+  googleMapModel.stateController.text = widget.addressDb.data.state;
+  googleMapModel.cityController.text = widget.addressDb.data.city;
+  googleMapModel.suburbController.text = widget.addressDb.data.suburb;
+  googleMapModel.streetController.text = widget.addressDb.data.streetAddress;
+  googleMapModel.pincodeController.text = widget.addressDb.data.postCode;
+
+  googleMapModel.addressDb = widget.addressDb;
+}
+
 
   TextStyle addressFieldLabelTextStyle() {
     return const TextStyle(
@@ -137,27 +238,64 @@ class _GoogleMapServiceControllerState
   height: widget.mapHeight ?? 210,
   width: widget.mapWidth ?? maxWidth,
   color: widget.backgroundColor ?? Colors.transparent,
-  child: GoogleMap(
-    initialCameraPosition: GoogleMapModel.initialPosition,
-    onMapCreated: (GoogleMapController controller) {
-      googleMapModel.mapController.complete(controller);
-    },
-    onTap: widget.readOnly
-        ? null
-        : (LatLng tappedLocation) {
-            googleMapModel.reverseGeocode(
-              tappedLocation,
-              widget.addressDb,
-              widget.onLookUpDataChange,
-            );
-            googleMapModel.addMarker(tappedLocation);
-            googleMapModel.moveCamera(tappedLocation);
-          },
-    onCameraMove: googleMapModel.onCameraMove,
-    markers: googleMapModel.marker != null
-        ? {googleMapModel.marker!}
-        : {},
-  ),
+  child: 
+  
+  // GoogleMap(
+  //   initialCameraPosition: GoogleMapModel.initialPosition,
+  //   onMapCreated: (GoogleMapController controller) {
+  //     googleMapModel.mapController.complete(controller);
+  //   },
+  //   onTap: widget.readOnly
+  //       ? null
+  //       : (LatLng tappedLocation) {
+  //           googleMapModel.reverseGeocode(
+  //             tappedLocation,
+  //             widget.addressDb,
+  //             widget.onLookUpDataChange,
+  //           );
+  //           googleMapModel.addMarker(tappedLocation);
+  //           googleMapModel.moveCamera(tappedLocation);
+  //         },
+  //   onCameraMove: googleMapModel.onCameraMove,
+  //   markers: googleMapModel.marker != null
+  //       ? {googleMapModel.marker!}
+  //       : {},
+  // ),
+// GoogleMap(
+//   initialCameraPosition: CameraPosition(
+//     target: widget.initialLocation ?? GoogleMapModel.initialPosition.target,
+//     zoom: 14,
+//   ),
+//   onMapCreated: (GoogleMapController controller) {
+//     googleMapModel.mapController.complete(controller);
+//     //  DO NOT force camera or marker here
+//   },
+//   markers: googleMapModel.marker != null
+//       ? {googleMapModel.marker!}
+//       : {},
+// )
+
+GoogleMap(
+  initialCameraPosition: GoogleMapModel.initialPosition,
+  onMapCreated: (GoogleMapController controller) {
+    googleMapModel.mapController.complete(controller);
+  },
+  onTap: widget.readOnly
+      ? null
+      : (LatLng tappedLocation) {
+          googleMapModel.reverseGeocode(
+            tappedLocation,
+            widget.addressDb,
+            widget.onLookUpDataChange,
+          );
+          googleMapModel.initializeMap(tappedLocation);
+        },
+  markers: googleMapModel.marker != null
+      ? {googleMapModel.marker!}
+      : {},
+)
+
+
 );
 
   }

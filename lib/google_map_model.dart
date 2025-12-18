@@ -121,7 +121,14 @@ class GoogleMapModel with ChangeNotifier {
     addMarker(_currentPosition);
 
     // Move the camera to the initial location.
+    // moveCamera(_currentPosition);
+    if (mapController.isCompleted) {
     moveCamera(_currentPosition);
+  } else {
+    mapController.future.then((controller) {
+      moveCamera(_currentPosition);
+    });
+  }
   }
 
   void addMarker(LatLng position) {
