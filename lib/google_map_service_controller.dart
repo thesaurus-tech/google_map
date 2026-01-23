@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:google_map_submodule/google_map_model.dart';
 import 'package:flutter/services.dart' show rootBundle;
+
 // import 'package:stay_on/models/firebase/address_collection.dart' as firebase;
 // import 'package:stay_on/models/protobuf/generated/address.pb.dart' as protobuf;
 
@@ -183,6 +184,7 @@ void initState() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:const Color(0xFFFFFFFF),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final maxWidth = constraints.maxWidth;
